@@ -23,3 +23,7 @@ Include the repository URL and a **pinned commit**, the specific files supportin
 Point to the sentence or table row, the source that changes it, and the narrower wording you recommend. We will date substantive changes and keep earlier reviews tied to their pinned revisions. A missing public receipt is a limit of what a reviewer can verify from that tree, not a claim that an author's underlying result is false.
 
 Please keep issue bodies focused on evidence and avoid posting secrets or data from systems you do not control.
+
+## Licensing contributions
+
+By submitting original research text or diagrams for inclusion, you agree to license that contribution under [CC BY 4.0](LICENSE). Original source code and code examples submitted for inclusion use the [MIT License](LICENSE-CODE), unless an accepted file clearly states a different license. Submit only material you have the right to license; link and attribute third-party sources rather than copying their work into a contribution.
