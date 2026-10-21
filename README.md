@@ -11,9 +11,12 @@ This repository collects **public-source research and static audits** of seven p
 
 **Start here:** [PHP2Shell evidence tracker](docs/evidence-tracker.md) — a dated, source-linked map of vendor findings, research demonstrations, observed attack traffic, and the open questions behind each claim.
 
+Found a new source or a correction? See [how to contribute evidence](CONTRIBUTING.md).
+
 ## Contents
 
 - [Evidence tracker](docs/evidence-tracker.md)
+- [Contributing research and corrections](CONTRIBUTING.md)
 - [Current status](#current-status)
 - [What PHP has published](#what-php-has-published)
 - [Independent research and observed activity](#independent-research-and-observed-activity)
