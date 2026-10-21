@@ -5,7 +5,7 @@
 **CVE-2026-109618 · CVE-2026-109619**  
 ![Status: source review](https://img.shields.io/badge/status-source%20review-2563eb) ![PoC: not claimed](https://img.shields.io/badge/PoC-not%20claimed-f59e0b)
 
-> ⭐ **Follow the trail from theory to proof.** Star this repo for PoC progress, test results, and any work-in-progress code or research utilities we share. Every update will distinguish verified results from open questions.
+> ⭐ **Follow the evidence as it develops.** Star this repo to bookmark and support the research; use **Watch** for GitHub notifications. Expect source-linked findings, test results, and any work-in-progress code or research utilities we publish, with verified results clearly separated from open questions.
 
 This repository collects **public-source research and a static audit** of two third-party projects. The audit is dated **21 October 2026**. We did not execute either project's code, send test requests, or independently reproduce either vulnerability. There is no working PoC in this repository.
 
