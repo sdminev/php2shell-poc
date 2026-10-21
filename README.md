@@ -7,7 +7,7 @@
 
 > ⭐ **Follow the evidence as it develops.** Star this repo to bookmark and support the research; use **Watch** for GitHub notifications. Expect source-linked findings, test results, and any work-in-progress code or research utilities we publish, with verified results clearly separated from open questions.
 
-This repository collects **public-source research and static audits** of seven public PoC repositories. The reviews are dated **21 October 2026**. We did not execute either project's code, send test requests, or independently reproduce either vulnerability. There is no working PoC in this repository.
+This repository collects **public-source research and static audits** of seven public PoC repositories. The reviews are dated **21 October 2026**. We did not execute code from any reviewed project, send test requests, or independently reproduce either vulnerability. There is no working PoC in this repository.
 
 **Start here:** [PHP2Shell evidence tracker](docs/evidence-tracker.md) — a dated, source-linked map of vendor findings, research demonstrations, observed attack traffic, and the open questions behind each claim.
 
@@ -22,7 +22,7 @@ Found a new source or a correction? See [how to contribute evidence](CONTRIBUTIN
 - [Independent research and observed activity](#independent-research-and-observed-activity)
 - [Public PoC repository review](#public-poc-repository-review)
   - [Main findings](#main-findings)
-  - [Five additional repositories](#five-additional-repositories)
+  - [Findings on five additional repositories](#findings-on-five-additional-repositories)
 - [How to read the evidence](#how-to-read-the-evidence)
 - [Path from research to a working PoC](#path-from-research-to-a-working-poc)
 - [Sources and update policy](#sources-and-update-policy)
@@ -35,7 +35,7 @@ Found a new source or a correction? See [how to contribute evidence](CONTRIBUTIN
 | Question | What the published evidence says |
 | --- | --- |
 | Are fixes available? | **Yes.** PHP released **8.2.35, 8.3.36, 8.4.27, and 8.5.12** with fixes for both CVEs. See [PHP's security announcement](https://www.php.net/archive/2026.php#2026-10-21-5). |
-| Is remote code execution demonstrated? | **Yes, in controlled research.** PHP reports a confirmed pre-application mod_php path for 109618 and mod_php exploitation plus a validated FPM session path for 109619. [Wiz](https://www.wiz.io/blog/php2shell-php-rce) reports pre-authentication RCE demonstrations against representative WordPress, Drupal, and Joomla deployments. These reports do not validate the two third-party repos audited below. |
+| Is remote code execution demonstrated? | **Yes, in controlled research.** PHP reports a confirmed pre-application mod_php path for 109618 and mod_php exploitation plus a validated FPM session path for 109619. [Wiz](https://www.wiz.io/blog/php2shell-php-rce) reports pre-authentication RCE demonstrations against representative WordPress, Drupal, and Joomla deployments. These reports do not validate any of the third-party repositories audited below. |
 | Has attack activity been seen? | **Yes, attempts have been reported.** [Cloudflare](https://blog.cloudflare.com/php-vulnerabilities-waf-protection) says it saw attack traffic targeting customers; [watchTowr](https://watchtowr.com/intelligence/php-remote-code-execution-php2shell/) reports exploitation attempts. The cited reports do not establish a confirmed successful intrusion. |
 | Is a WAF a complete fix? | **No.** [Cloudflare](https://blog.cloudflare.com/php-vulnerabilities-waf-protection) deployed protections and still recommends updating PHP. PHP says an updated runtime is the only complete remediation. |
 
@@ -54,7 +54,7 @@ The advisories describe **classes of failure with multiple variants**, not a sin
 
 | Source | Published finding | Evidence boundary |
 | --- | --- | --- |
-| [Wiz Research](https://www.wiz.io/blog/php2shell-php-rce) | Describes several variants grouped under the two CVEs, including memory disclosure and controlled RCE demonstrations on representative CMS deployments. | A research-team demonstration; it does not independently verify either repository audited here. |
+| [Wiz Research](https://www.wiz.io/blog/php2shell-php-rce) | Describes several variants grouped under the two CVEs, including memory disclosure and controlled RCE demonstrations on representative CMS deployments. | A research-team demonstration; it does not independently verify any repository audited here. |
 | [Cloudflare](https://blog.cloudflare.com/php-vulnerabilities-waf-protection) | Reports attack traffic against customers and deployment of default WAF protections on 21 October. | Observed attempts and protection deployment; the post does not identify a confirmed successful intrusion. |
 | [watchTowr](https://watchtowr.com/intelligence/php-remote-code-execution-php2shell/) | Reports active exploitation attempts and marks the issue as exploited in the wild. | Its published account supports the existence of attempts; it does not supply a confirmed compromise case in the material cited here. |
 
@@ -62,12 +62,17 @@ The distinction matters: **a vulnerability demonstration**, **attack traffic**, 
 
 ## Public PoC repository review
 
-This section starts with the **ikow and eness static source audit dated 2026-10-21**. We read their published code and lab files; we did not execute either project, send test requests, or verify their reported outcomes. The links below pin the reviewed revisions. A [second review](docs/public-poc-review-2026-10-21.md) covers five additional public repositories and includes a guide to reading and evaluating their claims.
+This **static source audit is dated 21 October 2026**. We read published code, lab configuration, and selected records at the pinned revisions below. We did not execute any project, send test requests, or verify reported outcomes. The [full seven-repository review](docs/public-poc-review-2026-10-21.md) links each implementation and explains the evidence boundary.
 
-| Repository | Its published claim | What the code supports |
+| Repository and reviewed revision | Published scope | What the published tree supports |
 | --- | --- | --- |
-| [ikow/php2shell-poc](https://github.com/ikow/php2shell-poc/tree/6d2168710509a2647545ba78d68afb1e3f745038) | “This is a pre-auth, zero-dependency RCE against default Apache mod_php installations.” ([README](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/README.md)) | Five probe scripts and a lab exist. Their response checks and published lab do not, by themselves, establish the README's RCE outcomes. |
-| [eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/tree/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11) | “Confirmed on standard `php-src` builds (including versions 8.4.4 and 8.2.34).” ([README](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/blob/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11/README.md)) | One payload-building Python script, an unofficial patch, and mitigation files exist. The repository does not include a complete, independently checkable vulnerable-versus-patched result. |
+| [ikow/php2shell-poc](https://github.com/ikow/php2shell-poc/tree/6d2168710509a2647545ba78d68afb1e3f745038) | [README](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/README.md) claims default mod_php pre-auth RCE and related probes. | Five probes and a lab; response-based checks and missing lab prerequisites do not establish the headline RCE result. |
+| [eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/tree/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11) | [README](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/blob/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11/README.md) claims confirmation on standard PHP builds. | A single-request payload script and mitigation files; no complete, independently checkable result for both CVEs. |
+| [9bie/php2shell-bypass-aslr-exp](https://github.com/9bie/php2shell-bypass-aslr-exp/tree/4586f5cc120c82fd468b17469202bac629810ad9) | [README](https://github.com/9bie/php2shell-bypass-aslr-exp/blob/4586f5cc120c82fd468b17469202bac629810ad9/readme_en.md) reports a full HTTP chain and repeatability on a mod_php lab. | Multi-stage code, a proof check, and logs with successes and a miss; build-specific inputs and no patched control limit portability and attribution. |
+| [jf0x3f/php2shell-pocs](https://github.com/jf0x3f/php2shell-pocs/tree/cc74c1897a274f28f0a65fee5847fdfa301dae7f) | [README](https://github.com/jf0x3f/php2shell-pocs/blob/cc74c1897a274f28f0a65fee5847fdfa301dae7f/README.md) calls these trigger reproductions, not RCE exploits. | Two trigger scripts and a contained lab; no committed direct memory trace or patched-build comparison. |
+| [0x4148/CVE-2026-109618-php2shell-lab](https://github.com/0x4148/CVE-2026-109618-php2shell-lab/tree/bc40fb2c96d5e92121e6bf8b996f7ba3ad057413) | [README](https://github.com/0x4148/CVE-2026-109618-php2shell-lab/blob/bc40fb2c96d5e92121e6bf8b996f7ba3ad057413/README.md) describes a timed upload and stale-pointer write, without RCE. | The session observation precedes the alleged write; the script does not directly identify pointer corruption or a worker crash. |
+| [xuehuolll/php2shell-CVE-2026-109618-109619](https://github.com/xuehuolll/php2shell-CVE-2026-109618-109619/tree/63618bd7629dbfc2d5b505e9dd74e321d8345351) | [README](https://github.com/xuehuolll/php2shell-CVE-2026-109618-109619/blob/63618bd7629dbfc2d5b505e9dd74e321d8345351/README.md) claims a remote mod_php chain and auxiliary paths. | Remote code and an instrumented memory trace exist; the trace covers another environment and the headline remote result lacks a matched checked-in receipt. |
+| [dinosn/php-cve-2026-10961x-lab-poc](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/tree/120b7b0eafee2ac5544b3092ff587032d3547ccf) | [README](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/blob/120b7b0eafee2ac5544b3092ff587032d3547ccf/README.md) reports lab-assisted RCE and a later no-debugger 12/12 chain. | Committed lab-assisted controls are substantial; the later claim points to absent reports and its driver checks request submission, not the final effect. |
 
 ### Main findings
 
@@ -81,19 +86,15 @@ These findings concern the **first two reviewed repositories** at their pinned c
 
 **Audit conclusion:** Both repos contain substantive research attempts, but neither published tree supplies enough reliable, reproducible evidence for this static audit to endorse a broad “both CVEs demonstrated as RCE” claim. That limits what we can conclude from the published code; it does not prove their underlying observations false. Independent demonstrations reported by PHP and Wiz are separate evidence.
 
-### Five additional repositories
+### Findings on five additional repositories
 
-The [expanded static review](docs/public-poc-review-2026-10-21.md) compares five distinct approaches:
+- **9bie — stronger lab receipt, scoped assumptions.** Its [driver](https://github.com/9bie/php2shell-bypass-aslr-exp/blob/4586f5cc120c82fd468b17469202bac629810ad9/exploit.py) checks a proof artifact and returns failure without one; the [run log](https://github.com/9bie/php2shell-bypass-aslr-exp/blob/4586f5cc120c82fd468b17469202bac629810ad9/logs/pure_http_aslr_20261021.txt) includes a miss. The [lab](https://github.com/9bie/php2shell-bypass-aslr-exp/blob/4586f5cc120c82fd468b17469202bac629810ad9/docker/docker-compose.yml) and offset derivation are build-specific, and no patched comparison is committed.
+- **jf0x3f — trigger research with appropriately limited claims.** The [109618](https://github.com/jf0x3f/php2shell-pocs/blob/cc74c1897a274f28f0a65fee5847fdfa301dae7f/trigger_cve_2026_109618.py) and [109619](https://github.com/jf0x3f/php2shell-pocs/blob/cc74c1897a274f28f0a65fee5847fdfa301dae7f/trigger_cve_2026_109619.py) scripts construct stimuli; the latter sends producer and consumer requests. The [Compose control](https://github.com/jf0x3f/php2shell-pocs/blob/cc74c1897a274f28f0a65fee5847fdfa301dae7f/compose.yaml) changes configuration, not PHP patch level. Its README does not claim RCE.
+- **0x4148 — observation precedes the claimed stale write.** The [script](https://github.com/0x4148/CVE-2026-109618-php2shell-lab/blob/bc40fb2c96d5e92121e6bf8b996f7ba3ad057413/scripts/php2shell_poc.py) checks session progress during a paused upload, before sending its remaining body. It interprets missing/502/503 responses as crashes without a worker trace. The alternative setup disables upload progress; it is no substitute for a patched PHP control.
+- **xuehuolll — evidence covers multiple scopes.** The [remote script](https://github.com/xuehuolll/php2shell-CVE-2026-109618-109619/blob/63618bd7629dbfc2d5b505e9dd74e321d8345351/exploit/cve/remote_cve.py) sends a final stage but has an optional proof check. The [ASan trace](https://github.com/xuehuolll/php2shell-CVE-2026-109618-109619/blob/63618bd7629dbfc2d5b505e9dd74e321d8345351/evidence/asan-bgctx.txt) covers an instrumented Development Server path, and the [shell demo](https://github.com/xuehuolll/php2shell-CVE-2026-109618-109619/blob/63618bd7629dbfc2d5b505e9dd74e321d8345351/evidence/shell-demo.txt) depends on a separate application include path. Neither is a matched receipt for the remote mod_php claim.
+- **dinosn — two different claimed proof levels.** [Retained verdicts](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/blob/120b7b0eafee2ac5544b3092ff587032d3547ccf/evidence/validation-20261020T190429Z/VERDICT.json) document the narrower lab-assisted result. The [later 12/12 account](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/blob/120b7b0eafee2ac5544b3092ff587032d3547ccf/docs/END-TO-END.md) cites reports absent from the reviewed commit; its [driver](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/blob/120b7b0eafee2ac5544b3092ff587032d3547ccf/e2e/nb_pure.py) returns success after sending the final request without checking the server-side marker.
 
-| Repository | What its published work is best read as |
-| --- | --- |
-| [9bie/php2shell-bypass-aslr-exp](https://github.com/9bie/php2shell-bypass-aslr-exp/tree/4586f5cc120c82fd468b17469202bac629810ad9) | A reported full lab chain with a proof check and retained run log; configuration and build assumptions matter. |
-| [jf0x3f/php2shell-pocs](https://github.com/jf0x3f/php2shell-pocs/tree/cc74c1897a274f28f0a65fee5847fdfa301dae7f) | Explicitly scoped trigger labs for OOM and cross-request worker failure, without an RCE claim. |
-| [0x4148/CVE-2026-109618-php2shell-lab](https://github.com/0x4148/CVE-2026-109618-php2shell-lab/tree/bc40fb2c96d5e92121e6bf8b996f7ba3ad057413) | An upload-progress lab whose session observation does not directly prove the claimed stale-pointer write. |
-| [xuehuolll/php2shell-CVE-2026-109618-109619](https://github.com/xuehuolll/php2shell-CVE-2026-109618-109619/tree/63618bd7629dbfc2d5b505e9dd74e321d8345351) | A remote-chain implementation and several records; the reviewed tree lacks a matched, independently checkable receipt for the headline remote result. |
-| [dinosn/php-cve-2026-10961x-lab-poc](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/tree/120b7b0eafee2ac5544b3092ff587032d3547ccf) | Retained controls for a lab-assisted result; the later no-debugger 12/12 report points to records absent from the reviewed commit. |
-
-These summaries identify **what the published trees support**, without ranking authors or rejecting results that have not been published. The [full review](docs/public-poc-review-2026-10-21.md) links the relevant files and sets out what evidence would change each assessment.
+The [full review](docs/public-poc-review-2026-10-21.md#repo-by-repo-findings) explains each finding, its source, and what published evidence would change the assessment. These are limits of the **pinned public trees**, not claims that later or private results are false.
 
 ## How to read the evidence
 
@@ -124,7 +125,7 @@ A future PoC entry should include its exact scope, pinned build and configuratio
 
 - **Primary remediation source:** [PHP security announcement](https://www.php.net/archive/2026.php#2026-10-21-5), [109618 advisory](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w), [109619 advisory](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp), and [upstream fix](https://github.com/php/php-src/commit/31c0ea7d7ff1d1fccb6492e52dab544011628065).
 - **Independent research and field reporting:** [Wiz Research](https://www.wiz.io/blog/php2shell-php-rce), [Cloudflare](https://blog.cloudflare.com/php-vulnerabilities-waf-protection), and [watchTowr](https://watchtowr.com/intelligence/php-remote-code-execution-php2shell/).
-- **Audited projects:** [ikow/php2shell-poc at the reviewed revision](https://github.com/ikow/php2shell-poc/tree/6d2168710509a2647545ba78d68afb1e3f745038), [eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC at the reviewed revision](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/tree/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11), and [the expanded five-repository review](docs/public-poc-review-2026-10-21.md).
+- **Audited projects:** [ikow/php2shell-poc at the reviewed revision](https://github.com/ikow/php2shell-poc/tree/6d2168710509a2647545ba78d68afb1e3f745038), [eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC at the reviewed revision](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/tree/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11), and [the seven-repository review](docs/public-poc-review-2026-10-21.md).
 
 Status statements are dated. Future updates should link the exact source and date, distinguish a report from our own verification, and identify whether an observation is a crash, memory error, information disclosure, or code execution. The pinned source audits remain tied to the linked revisions; material changes to any reviewed project require a new review.
 
@@ -132,7 +133,7 @@ Status statements are dated. Future updates should link the exact source and dat
 
 Copyright © 2026 **sdminev**.
 
-- **Original research writing and diagrams** in the README, CONTRIBUTING.md, and §docs/§ are licensed under [Creative Commons Attribution 4.0 International](LICENSE) (**CC BY 4.0**). When sharing or adapting that material, credit §sdminev§, link to [this repository](https://github.com/sdminev/php2shell-poc) and the license, and indicate changes.
+- **Original research writing and diagrams** in the README, CONTRIBUTING.md, and `docs/` are licensed under [Creative Commons Attribution 4.0 International](LICENSE) (**CC BY 4.0**). When sharing or adapting that material, credit `sdminev`, link to [this repository](https://github.com/sdminev/php2shell-poc) and the license, and indicate changes.
 - **Original source code and code examples**, including any published later, are licensed under the [MIT License](LICENSE-CODE) unless a file clearly says otherwise.
 - **Third-party quotations, linked repositories, and externally sourced material** are not relicensed by this project. Their original rights and notices continue to apply.
 
