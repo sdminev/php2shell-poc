@@ -1,0 +1,9 @@
+# Local research artifacts
+artifacts/
+build/
+core
+core.*
+*.log
+*.pcap
+*.pcapng
+.env
