@@ -9,8 +9,11 @@
 
 This repository collects **public-source research and a static audit** of two third-party projects. The audit is dated **21 October 2026**. We did not execute either project's code, send test requests, or independently reproduce either vulnerability. There is no working PoC in this repository.
 
+**Start here:** [PHP2Shell evidence tracker](docs/evidence-tracker.md) — a dated, source-linked map of vendor findings, research demonstrations, observed attack traffic, and the open questions behind each claim.
+
 ## Contents
 
+- [Evidence tracker](docs/evidence-tracker.md)
 - [Current status](#current-status)
 - [What PHP has published](#what-php-has-published)
 - [Independent research and observed activity](#independent-research-and-observed-activity)
