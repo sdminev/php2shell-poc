@@ -5,7 +5,7 @@
 **CVE-2026-109618 · CVE-2026-109619**  
 ![Status: source review](https://img.shields.io/badge/status-source%20review-2563eb) ![PoC: not claimed](https://img.shields.io/badge/PoC-not%20claimed-f59e0b)
 
-> ⭐ **Follow the evidence, not the hype.** Star this repo for research updates and PoC status. Any future examples will be shared only with clear evidence and scope.
+> ⭐ **Follow the trail from theory to proof.** Star this repo for PoC progress, test results, and any work-in-progress code or research utilities we share. Every update will distinguish verified results from open questions.
 
 This repository records a **read-only review of public information** as of 2026-10-21. We reviewed the two projects linked below and PHP's published advisories. We did not execute their code, test a server, or independently reproduce either vulnerability. There is no working PoC in this repository.
 
