@@ -1,6 +1,6 @@
 # Lab plan and safe review guide
 
-**Status:** planning and static review only. We have not downloaded, built, executed, or reproduced any reviewed project. This guide describes how to assess a published lab and plan an independent comparison; it contains no exploit request or PoC runner instructions.
+**Status:** planning and static review only. This guide describes how to assess a published lab and plan an independent comparison;
 
 The goal is to answer a narrow question: **does the evidence published by a project support the outcome it claims, and what would an independent lab need to observe to confirm it?** Start with the [seven-repository source review](public-poc-review-2026-10-21.md) and PHP's [CVE-2026-109618](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w) and [CVE-2026-109619](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp) advisories.
 
