@@ -26,6 +26,7 @@ Found a new source or a correction? See [how to contribute evidence](CONTRIBUTIN
 - [How to read the evidence](#how-to-read-the-evidence)
 - [Path from research to a working PoC](#path-from-research-to-a-working-poc)
 - [Sources and update policy](#sources-and-update-policy)
+- [License](#license)
 
 ## Current status
 
@@ -126,3 +127,12 @@ A future PoC entry should include its exact scope, pinned build and configuratio
 - **Audited projects:** [ikow/php2shell-poc at the reviewed revision](https://github.com/ikow/php2shell-poc/tree/6d2168710509a2647545ba78d68afb1e3f745038), [eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC at the reviewed revision](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/tree/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11), and [the expanded five-repository review](docs/public-poc-review-2026-10-21.md).
 
 Status statements are dated. Future updates should link the exact source and date, distinguish a report from our own verification, and identify whether an observation is a crash, memory error, information disclosure, or code execution. The pinned source audits remain tied to the linked revisions; material changes to any reviewed project require a new review.
+
+## License
+
+Copyright © 2026 **sdminev**.
+
+- **Original research writing and diagrams** in the README, CONTRIBUTING.md, and §docs/§ are licensed under [Creative Commons Attribution 4.0 International](LICENSE) (**CC BY 4.0**). When sharing or adapting that material, credit §sdminev§, link to [this repository](https://github.com/sdminev/php2shell-poc) and the license, and indicate changes.
+- **Original source code and code examples**, including any published later, are licensed under the [MIT License](LICENSE-CODE) unless a file clearly says otherwise.
+- **Third-party quotations, linked repositories, and externally sourced material** are not relicensed by this project. Their original rights and notices continue to apply.
+
