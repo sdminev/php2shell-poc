@@ -23,6 +23,7 @@ Found a new source or a correction? See [how to contribute evidence](CONTRIBUTIN
 - [Public PoC repository review](#public-poc-repository-review)
   - [Detailed findings](#detailed-findings)
 - [How to read the evidence](#how-to-read-the-evidence)
+- [Lab plan and safe review guide](docs/lab-plan.md)
 - [Path from research to a working PoC](#path-from-research-to-a-working-poc)
 - [Sources and update policy](#sources-and-update-policy)
 - [License](#license)
@@ -133,6 +134,8 @@ Our audit assesses **what the published repository trees establish**. It is not 
 | Success checks can be ambiguous | Use an unmistakable local observation tied to the server-side effect, rule out echoed input, and make failures distinguishable from successes. |
 | No patch comparison is published | Apply the same minimal stimulus to corresponding vulnerable and fixed builds and retain both results, including unsuccessful trials. |
 | Mitigation advice is incomplete | Compare any proposed workaround with both PHP advisories; label partial exposure reduction as such and use the complete upstream fix for remediation claims. |
+
+The [lab plan and safe review guide](docs/lab-plan.md) maps all seven public repositories to the questions they can help study. It covers source inspection, a disposable local comparison, evidence criteria, and reporting boundaries. **No lab was built or run for this review.**
 
 A future PoC entry should include its exact scope, pinned build and configuration, input fixture, observed trace, fixed-build comparison, and limitations. Label the result **crash**, **sanitizer-confirmed memory corruption**, or **code execution** according to the evidence actually collected. Until then, this repository remains research and audit documentation.
 
