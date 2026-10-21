@@ -7,7 +7,7 @@
 
 > ⭐ **Follow the evidence as it develops.** Star this repo to bookmark and support the research; use **Watch** for GitHub notifications. Expect source-linked findings, test results, and any work-in-progress code or research utilities we publish, with verified results clearly separated from open questions.
 
-This repository collects **public-source research and a static audit** of two third-party projects. The audit is dated **21 October 2026**. We did not execute either project's code, send test requests, or independently reproduce either vulnerability. There is no working PoC in this repository.
+This repository collects **public-source research and static audits** of seven public PoC repositories. The reviews are dated **21 October 2026**. We did not execute either project's code, send test requests, or independently reproduce either vulnerability. There is no working PoC in this repository.
 
 **Start here:** [PHP2Shell evidence tracker](docs/evidence-tracker.md) — a dated, source-linked map of vendor findings, research demonstrations, observed attack traffic, and the open questions behind each claim.
 
@@ -17,8 +17,9 @@ This repository collects **public-source research and a static audit** of two th
 - [Current status](#current-status)
 - [What PHP has published](#what-php-has-published)
 - [Independent research and observed activity](#independent-research-and-observed-activity)
-- [What the two example repositories actually publish](#what-the-two-example-repositories-actually-publish)
+- [Public PoC repository review](#public-poc-repository-review)
   - [Main findings](#main-findings)
+  - [Five additional repositories](#five-additional-repositories)
 - [How to read the evidence](#how-to-read-the-evidence)
 - [Path from research to a working PoC](#path-from-research-to-a-working-poc)
 - [Sources and update policy](#sources-and-update-policy)
@@ -55,9 +56,9 @@ The advisories describe **classes of failure with multiple variants**, not a sin
 
 The distinction matters: **a vulnerability demonstration**, **attack traffic**, and **a confirmed compromise** are different findings. This page records each at the level its cited source supports.
 
-## What the two example repositories actually publish
+## Public PoC repository review
 
-This section is a **static source audit dated 2026-10-21**. We read the published code and lab files; we did not execute either project, send test requests, or verify their reported outcomes. The links below pin the reviewed revisions.
+This section starts with the **ikow and eness static source audit dated 2026-10-21**. We read their published code and lab files; we did not execute either project, send test requests, or verify their reported outcomes. The links below pin the reviewed revisions. A [second review](docs/public-poc-review-2026-10-21.md) covers five additional public repositories and includes a guide to reading and evaluating their claims.
 
 | Repository | Its published claim | What the code supports |
 | --- | --- | --- |
@@ -66,6 +67,8 @@ This section is a **static source audit dated 2026-10-21**. We read the publishe
 
 ### Main findings
 
+These findings concern the **first two reviewed repositories** at their pinned commits.
+
 1. **Repository CVE attribution needs narrower evidence.** PHP's advisories describe [109618](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w) as out-of-memory bailout corruption and [109619](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp) as stale state crossing a request boundary. Each CVE covers more than one possible variant, as [Wiz's research](https://www.wiz.io/blog/php2shell-php-rce) makes clear. Eness's sole [PoC script](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/blob/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11/poc_109618.py) proposes an upload-progress pointer issue in one request; the published script does not establish the producer-and-consumer sequence PHP documents for 109619. Several of ikow's labeled chains require a separate application flaw or configuration condition. These are limits of those published scripts, not limits of the CVEs themselves.
 2. **Ikow's probes overinterpret responses.** Its [OOM script](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/poc/verify_oom_trigger.py) treats an HTTP 500 or no response as evidence of the vulnerable condition without checking PHP's memory state, a sanitizer trace, or code execution. Its [FPM script](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/poc/verify_fpm_stale_state.py) similarly labels a 502 as a triggered use-after-free. Those responses have many possible causes. The [session-injection script](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/poc/verify_session_injection.py) asks the reader to inspect session files; the [handler-mismatch script](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/poc/verify_handler_mismatch.py) uses an object without the destructor needed to demonstrate its claimed execution path.
 3. **Ikow's published lab is internally inconsistent.** The [setup script](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/lab/setup.sh) says it prepares PHP 8.2.34 but selects a floating 8.2 image. It replaces the checked-in [Compose file](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/lab/docker-compose.yml) with one that omits the Apache service used for the mod_php claim. The [FPM probe](https://github.com/ikow/php2shell-poc/blob/6d2168710509a2647545ba78d68afb1e3f745038/poc/verify_fpm_stale_state.py) requires a large prepared session, a particular endpoint, and a single worker; the setup script does not create those prerequisites. As published, the repo is not a pinned, self-contained reproduction of those claims.
@@ -73,6 +76,20 @@ This section is a **static source audit dated 2026-10-21**. We read the publishe
 5. **Eness's mitigation files are not a substitute for PHP's fix.** Its [proposed patch](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/blob/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11/patch/session-upload-progress-counters.patch) changes upload-progress counter handling, while PHP's [upstream fix](https://github.com/php/php-src/commit/31c0ea7d7ff1d1fccb6492e52dab544011628065) addresses the broader out-of-memory and stale-state conditions. The host-wide [quick-fix script](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/blob/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11/quick-fix/run.sh) leaves its fixed-version list empty, so its version check cannot reliably recognize current upstream fixed releases. Its supposedly read-only check also creates temporary files and queries live FPM pools.
 
 **Audit conclusion:** Both repos contain substantive research attempts, but neither published tree supplies enough reliable, reproducible evidence for this static audit to endorse a broad “both CVEs demonstrated as RCE” claim. That limits what we can conclude from the published code; it does not prove their underlying observations false. Independent demonstrations reported by PHP and Wiz are separate evidence.
+
+### Five additional repositories
+
+The [expanded static review](docs/public-poc-review-2026-10-21.md) compares five distinct approaches:
+
+| Repository | What its published work is best read as |
+| --- | --- |
+| [9bie/php2shell-bypass-aslr-exp](https://github.com/9bie/php2shell-bypass-aslr-exp/tree/4586f5cc120c82fd468b17469202bac629810ad9) | A reported full lab chain with a proof check and retained run log; configuration and build assumptions matter. |
+| [jf0x3f/php2shell-pocs](https://github.com/jf0x3f/php2shell-pocs/tree/cc74c1897a274f28f0a65fee5847fdfa301dae7f) | Explicitly scoped trigger labs for OOM and cross-request worker failure, without an RCE claim. |
+| [0x4148/CVE-2026-109618-php2shell-lab](https://github.com/0x4148/CVE-2026-109618-php2shell-lab/tree/bc40fb2c96d5e92121e6bf8b996f7ba3ad057413) | An upload-progress lab whose session observation does not directly prove the claimed stale-pointer write. |
+| [xuehuolll/php2shell-CVE-2026-109618-109619](https://github.com/xuehuolll/php2shell-CVE-2026-109618-109619/tree/63618bd7629dbfc2d5b505e9dd74e321d8345351) | A remote-chain implementation and several records; the reviewed tree lacks a matched, independently checkable receipt for the headline remote result. |
+| [dinosn/php-cve-2026-10961x-lab-poc](https://github.com/dinosn/php-cve-2026-10961x-lab-poc/tree/120b7b0eafee2ac5544b3092ff587032d3547ccf) | Retained controls for a lab-assisted result; the later no-debugger 12/12 report points to records absent from the reviewed commit. |
+
+These summaries identify **what the published trees support**, without ranking authors or rejecting results that have not been published. The [full review](docs/public-poc-review-2026-10-21.md) links the relevant files and sets out what evidence would change each assessment.
 
 ## How to read the evidence
 
@@ -103,6 +120,6 @@ A future PoC entry should include its exact scope, pinned build and configuratio
 
 - **Primary remediation source:** [PHP security announcement](https://www.php.net/archive/2026.php#2026-10-21-5), [109618 advisory](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w), [109619 advisory](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp), and [upstream fix](https://github.com/php/php-src/commit/31c0ea7d7ff1d1fccb6492e52dab544011628065).
 - **Independent research and field reporting:** [Wiz Research](https://www.wiz.io/blog/php2shell-php-rce), [Cloudflare](https://blog.cloudflare.com/php-vulnerabilities-waf-protection), and [watchTowr](https://watchtowr.com/intelligence/php-remote-code-execution-php2shell/).
-- **Audited projects:** [ikow/php2shell-poc at the reviewed revision](https://github.com/ikow/php2shell-poc/tree/6d2168710509a2647545ba78d68afb1e3f745038) and [eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC at the reviewed revision](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/tree/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11).
+- **Audited projects:** [ikow/php2shell-poc at the reviewed revision](https://github.com/ikow/php2shell-poc/tree/6d2168710509a2647545ba78d68afb1e3f745038), [eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC at the reviewed revision](https://github.com/eness/php2shell-CVE-2026-109618-CVE-2026-109619-PoC/tree/e8db5ee1252ea3d6d084e3e421c6eb7a380efc11), and [the expanded five-repository review](docs/public-poc-review-2026-10-21.md).
 
-Status statements are dated. Future updates should link the exact source and date, distinguish a report from our own verification, and identify whether an observation is a crash, memory error, information disclosure, or code execution. The pinned source audit remains tied to the revisions above; material changes to either project require a new review.
+Status statements are dated. Future updates should link the exact source and date, distinguish a report from our own verification, and identify whether an observation is a crash, memory error, information disclosure, or code execution. The pinned source audits remain tied to the linked revisions; material changes to any reviewed project require a new review.
